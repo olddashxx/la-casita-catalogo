@@ -1,0 +1,584 @@
+<!DOCTYPE html> <!-- [HTML5 SEMÁNTICO] Catálogo PWA con navegación por pestañas SPA para La Casita — Club de Bienestar (Javier Espejo) -->
+<html lang="es"> <!-- [A11Y] Idioma español -->
+
+<head> <!-- [HEAD] Metadatos, PWA, tipografías, CSS y librerías de seguridad/DOM -->
+  <meta charset="UTF-8"> <!-- [CODIFICACIÓN] Soporte completo de tildes, eñes y símbolos -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- [MOBILE-FIRST] Adaptación de ancho al dispositivo -->
+  <meta name="theme-color" content="#14362a"> <!-- [PWA THEME] Color verde bosque institucional -->
+  <meta name="description" content="La Casita — Club de Bienestar Herbalife de Javier Espejo en La Paz, Bolivia. Batidos nutricionales Fórmula 1, tés herbales, combos 3 pasos y pedidos por WhatsApp."> <!-- [SEO] -->
+  <title>La Casita — Club de Bienestar | Catálogo Herbalife Nutrition (Javier Espejo)</title> <!-- [SEO] Título -->
+
+  <link rel="manifest" href="manifest.json"> <!-- [PWA MANIFEST] Aplicación instalable -->
+  <link rel="icon" type="image/jpeg" href="imagenes y video/logo-la-casita.jpg"> <!-- [FAVICON] Logo oficial ilustrado La Casita Club -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- [PERFORMANCE] Preconexión Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- [PERFORMANCE] CORS fuentes -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@600;700;800&display=swap"> <!-- [TIPOGRAFÍA] Poppins y DM Sans -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> <!-- [ICONOS] Font Awesome 6.5.0 -->
+  <link rel="stylesheet" href="styles.css?v=2"> <!-- [ESTILOS CSS] Hoja v2 Mobile-First, logo principal y Dock adaptable -->
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script> <!-- [ANTI-XSS] Sanitizador DOMPurify -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <!-- [JQUERY] Librería jQuery 3.7.1 -->
+</head>
+
+<body> <!-- [CUERPO] Un Solo Código Base con Dock adaptable y 6 pestañas SPA sin scroll largo -->
+
+  <div class="contenedor-app"> <!-- [CONTENEDOR FLEX] Barra inferior en móvil/tablet -> barra lateral continua hasta footer en PC -->
+
+    <nav class="dock-acciones" aria-label="Navegación principal por pestañas de La Casita Club"> <!-- [DOCK ADAPTABLE] -->
+
+      <div class="dock-acciones__inner"> <!-- [CONTENEDOR STICKY SIDEBAR] -->
+
+        <div class="dock-acciones__brand"> <!-- [MARCA SIDEBAR DESKTOP] -->
+          <img src="imagenes y video/logo-la-casita.jpg" alt="Logo principal La Casita Club de Bienestar — Javier Espejo" class="brand-club__logo" width="42" height="42"> <!-- [LOGO PRINCIPAL] -->
+          <div class="dock-acciones__brand-text"> <!-- [TEXTO MARCA] -->
+            <span class="dock-acciones__title">La Casita <span>Club</span></span> <!-- [NOMBRE] -->
+            <span class="dock-acciones__subtitle">Herbalife • Javier Espejo</span> <!-- [ANFITRIÓN] -->
+          </div>
+        </div>
+
+        <div class="dock-acciones__items" role="tablist"> <!-- [PESTAÑAS SPA SIN ANCLAJES #] -->
+          <button type="button" class="dock-acciones__btn active btn-hidratable" data-hidratado="false" data-tab="tab-inicio" role="tab" aria-selected="true" aria-label="Ir a Inicio"> <!-- [TAB 1] -->
+            <i class="fa-solid fa-house"></i> <!-- [ICONO] -->
+            <span>Inicio</span> <!-- [ETIQUETA] -->
+          </button>
+          <button type="button" class="dock-acciones__btn btn-hidratable" data-hidratado="false" data-tab="tab-lineas" role="tab" aria-selected="false" aria-label="Ir a Líneas de Nutrición"> <!-- [TAB 2] -->
+            <i class="fa-solid fa-seedling"></i> <!-- [ICONO] -->
+            <span>Líneas</span> <!-- [ETIQUETA] -->
+          </button>
+          <button type="button" class="dock-acciones__btn btn-hidratable" data-hidratado="false" data-tab="tab-catalogo" role="tab" aria-selected="false" aria-label="Ir a Catálogo"> <!-- [TAB 3] -->
+            <i class="fa-solid fa-blender"></i> <!-- [ICONO] -->
+            <span>Catálogo</span> <!-- [ETIQUETA] -->
+          </button>
+          <button type="button" class="dock-acciones__btn btn-hidratable" data-hidratado="false" data-tab="tab-comunidad" role="tab" aria-selected="false" aria-label="Ir a Club y Video"> <!-- [TAB 4] -->
+            <i class="fa-solid fa-people-group"></i> <!-- [ICONO] -->
+            <span>Club</span> <!-- [ETIQUETA] -->
+          </button>
+          <button type="button" class="dock-acciones__btn btn-hidratable" data-hidratado="false" data-tab="tab-pedido" role="tab" aria-selected="false" aria-label="Ir a Mi Pedido"> <!-- [TAB 5] -->
+            <i class="fa-solid fa-cart-shopping"></i> <!-- [ICONO] -->
+            <span>Pedido</span> <!-- [ETIQUETA] -->
+          </button>
+          <button type="button" class="dock-acciones__btn btn-hidratable" data-hidratado="false" data-tab="tab-contacto" role="tab" aria-selected="false" aria-label="Ir a Contacto"> <!-- [TAB 6] -->
+            <i class="fa-solid fa-location-dot"></i> <!-- [ICONO] -->
+            <span>Contacto</span> <!-- [ETIQUETA] -->
+          </button>
+        </div>
+
+        <div class="dock-acciones__footer"> <!-- [CONTROLES DESKTOP] Red, modo oscuro e instalación PWA -->
+          <span id="estadoRedDock" class="estado-red-badge" role="status">🟢 En Línea</span> <!-- [ESTADO RED PC] -->
+          <button id="themeBtnDock" class="btn-secundario btn-hidratable" data-hidratado="false" type="button" title="Cambiar apariencia" aria-label="Cambiar modo claro u oscuro">🌓 Tema</button> <!-- [DARK MODE PC] -->
+          <button id="btnInstalarPWADock" class="btn-accion btn-hidratable" data-hidratado="false" type="button" hidden aria-label="Instalar App La Casita">📲 Instalar</button> <!-- [PWA INSTALL PC] -->
+        </div>
+
+      </div>
+
+    </nav>
+
+    <div class="area-contenido"> <!-- [COLUMNA PRINCIPAL] Cabecera + pestañas activas -->
+
+      <header class="navbar-club"> <!-- [NAVBAR STICKY] Marca + controles móviles + menú hamburguesa -->
+        <div class="navbar-inner"> <!-- [CONTENEDOR NAVBAR] -->
+          <button type="button" class="brand-club btn-go-tab btn-hidratable" data-hidratado="false" data-tab="tab-inicio" aria-label="Volver al inicio La Casita Club"> <!-- [MARCA HEADER] -->
+            <img src="imagenes y video/logo-la-casita.jpg" alt="Logo principal La Casita Club de Bienestar — Javier Espejo" class="brand-club__logo" width="42" height="42"> <!-- [LOGO PRINCIPAL] -->
+            <div class="brand-texto"> <!-- [TEXTOS MARCA] -->
+              <h1>La Casita — Club de Bienestar</h1> <!-- [H1] -->
+              <small>Herbalife Nutrition • Anfitrión Javier Espejo</small> <!-- [SUBTÍTULO] -->
+            </div>
+          </button>
+
+          <div class="nav-actions"> <!-- [ACCIONES RÁPIDAS] -->
+            <span id="estadoRed" class="estado-red-badge mobile-only-control" role="status">🟢 En Línea</span> <!-- [ESTADO RED MÓVIL] -->
+            <button id="themeBtn" class="btn-secundario mobile-only-control btn-hidratable" data-hidratado="false" type="button" title="Cambiar apariencia" aria-label="Cambiar modo claro u oscuro">🌓 Tema</button> <!-- [DARK MODE MÓVIL] -->
+            <button id="btnInstalarPWA" class="btn-accion mobile-only-control btn-hidratable" data-hidratado="false" type="button" hidden aria-label="Instalar App La Casita">📲 Instalar</button> <!-- [PWA INSTALL MÓVIL] -->
+            <div id="contenedorMenu" data-hidratado="false" style="display:inline-flex; gap:6px;"> <!-- [HIDRATACIÓN] -->
+              <button id="hamburgerBtn" class="menu-toggle btn-hidratable" data-hidratado="false" type="button" aria-label="Menú Rápido" aria-expanded="false">☰</button> <!-- [BOTÓN HAMBURGUESA MÓDULO 1] -->
+            </div>
+          </div>
+        </div>
+
+        <nav class="nav-menu" id="navMenu" aria-label="Menú desplegable por pestañas"> <!-- [MENÚ HAMBURGUESA SIN ANCLAS] -->
+          <ul> <!-- [OPCIONES TAB] -->
+            <li><button type="button" class="nav-menu-tab btn-hidratable" data-hidratado="false" data-tab="tab-inicio">🏠 Inicio — Bienvenido a La Casita Club</button></li> <!-- [TAB 1] -->
+            <li><button type="button" class="nav-menu-tab btn-hidratable" data-hidratado="false" data-tab="tab-lineas">🌿 Líneas de Nutrición y Objetivos</button></li> <!-- [TAB 2] -->
+            <li><button type="button" class="nav-menu-tab btn-hidratable" data-hidratado="false" data-tab="tab-catalogo">🥤 Catálogo de Combos, Batidos y Tés</button></li> <!-- [TAB 3] -->
+            <li><button type="button" class="nav-menu-tab btn-hidratable" data-hidratado="false" data-tab="tab-comunidad">🎥 Ambiente del Club, Video y Socios</button></li> <!-- [TAB 4] -->
+            <li><button type="button" class="nav-menu-tab btn-hidratable" data-hidratado="false" data-tab="tab-pedido">🛒 Mi Pedido y Envío a WhatsApp</button></li> <!-- [TAB 5] -->
+            <li><button type="button" class="nav-menu-tab btn-hidratable" data-hidratado="false" data-tab="tab-contacto">📍 Ubicación, Evaluación Nutricional y Contacto</button></li> <!-- [TAB 6] -->
+          </ul>
+        </nav>
+      </header>
+
+      <main class="desktop-wrapper" id="inicio"> <!-- [CONTENEDOR PESTAÑAS SPA] -->
+
+        <div id="tab-inicio" class="panel-tab active"> <!-- [PESTAÑA 1: INICIO] Hero + Quiénes Somos + Ventajas del Trío -->
+
+          <section class="hero-club" aria-labelledby="heading-hero"> <!-- [HERO PRINCIPAL 2 COLUMNAS] -->
+            <div> <!-- [IZQUIERDA HERO] -->
+              <span class="hero-badge">Nutrición Celular Herbalife • La Casita Club de Bienestar</span> <!-- [BADGE] -->
+              <h2 id="heading-hero">Tu Desayuno Nutricional de 3 Pasos en La Casita</h2> <!-- [H2 HERO] -->
+              <p> <!-- [DESCRIPCIÓN] -->
+                Te damos la bienvenida al Club de Bienestar <strong>La Casita</strong>, guiado por <strong>Javier Espejo</strong>. Disfruta batidos proteicos, té termogénico y sábila refrescante en un ambiente familiar o pídelos para llevar directo por WhatsApp.
+              </p>
+              <div class="hero-cta-group"> <!-- [CTAS POR PESTAÑA] -->
+                <button type="button" class="btn-accion btn-go-tab btn-hidratable" data-hidratado="false" data-tab="tab-catalogo">🥤 Ver Catálogo Completo</button> <!-- [VA A CATÁLOGO] -->
+                <button type="button" class="btn-primario btn-go-tab btn-hidratable" data-hidratado="false" data-tab="tab-pedido">🛒 Armar Mi Pedido</button> <!-- [VA A PEDIDO] -->
+                <button type="button" class="btn-secundario btn-go-tab btn-hidratable" data-hidratado="false" data-tab="tab-comunidad">🎥 Ver el Club en Acción</button> <!-- [VA A COMUNIDAD] -->
+              </div>
+            </div>
+
+            <div class="hero-side-stack"> <!-- [DERECHA HERO] Foto real del trío + 3 accesos -->
+              <div class="hero-foto-box"> <!-- [MARCO FOTO REAL] -->
+                <img src="imagenes y video/WhatsApp Image 2026-11-23 at 7.20.14 PM.jpeg" alt="Combo 3 pasos de Herbalife Nutrition en La Casita Club de Bienestar" width="640" height="360"> <!-- [FOTO REAL TRÍO] -->
+              </div>
+              <button type="button" class="hero-mini-card btn-go-tab btn-hidratable" data-hidratado="false" data-tab="tab-catalogo"> <!-- [ACCESO 1] -->
+                <i class="fa-solid fa-mug-hot"></i>
+                <div>
+                  <strong>Aloe • Té • Batido (3 Pasos)</strong>
+                  <small>Limpieza digestiva, energía y proteína en minutos</small>
+                </div>
+              </button>
+              <button type="button" class="hero-mini-card btn-go-tab btn-hidratable" data-hidratado="false" data-tab="tab-pedido"> <!-- [ACCESO 2] -->
+                <i class="fa-brands fa-whatsapp"></i>
+                <div>
+                  <strong>Arma tu Pedido y Pide por WhatsApp</strong>
+                  <small>Elige sabores, adicionales y envía tu orden en 1 clic</small>
+                </div>
+              </button>
+            </div>
+          </section>
+
+          <section id="sobre-club" class="seccion-card" aria-labelledby="heading-sobre"> <!-- [SOBRE LA CASITA] -->
+            <div class="seccion-header"> <!-- [CABECERA] -->
+              <h2 id="heading-sobre">¿Qué es La Casita — Club de Bienestar?</h2> <!-- [H2] -->
+              <span class="seccion-subtitulo">Atención cercana, desayunos saludables y seguimiento personalizado</span> <!-- [SUBTÍTULO] -->
+            </div>
+
+            <div class="grid-2-cols" style="align-items: center;"> <!-- [GRID 2 COLUMNAS] -->
+              <div> <!-- [TEXTO REAL] -->
+                <p style="margin-bottom: 12px; font-size: 15px;">
+                  En <strong>La Casita Club de Bienestar</strong> compartimos cada mañana y tarde un espacio ameno para cuidar tu alimentación sin complicaciones. No vendemos solo suplementos: te preparamos tu nutrición diaria al instante y te acompañamos según tus metas físicas.
+                </p>
+                <p style="margin-bottom: 14px; font-size: 15px;">
+                  Tanto si buscas <strong>controlar tu peso</strong>, <strong>ganar energía y masa muscular</strong> o <strong>mejorar tu digestión</strong>, Javier Espejo te asesora paso a paso junto a nuestra comunidad de socios que disfrutan su batido cada día.
+                </p>
+                <div class="callout-nota"> <!-- [DESTACADO] -->
+                  <strong><i class="fa-solid fa-qrcode"></i> Atención Rápida en Club o Para Llevar:</strong> Aceptamos pagos en efectivo y transferencia QR (Yape / banco) directamente en mostrador o al confirmar tu pedido.
+                </div>
+              </div>
+
+              <div> <!-- [FOTO REAL DEL CLUB Y SOCIOS] -->
+                <div class="club-media-box">
+                  <img src="imagenes y video/WhatsApp Image 2026-11-23 at 7.20.17 PM (2).jpeg" alt="Javier Espejo y socios compartiendo en La Casita Club frente a la vitrina de productos" width="640" height="400" loading="lazy"> <!-- [FOTO REAL VITRINA] -->
+                </div>
+                <p style="font-size: 12.5px; color: var(--text-muted); text-align: center;">
+                  Javier Espejo junto a socios en La Casita Club de Bienestar, con vitrina completa de sabores Herbalife.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="beneficios" class="seccion-card" aria-labelledby="heading-beneficios"> <!-- [TABLA DE BENEFICIOS] -->
+            <div class="seccion-header"> <!-- [CABECERA] -->
+              <h2 id="heading-beneficios">Los 3 Pasos de la Nutrición Celular en el Club</h2> <!-- [H2] -->
+              <span class="seccion-subtitulo">Cómo funciona nuestro desayuno estrella en comparación con un desayuno común</span> <!-- [SUBTÍTULO] -->
+            </div>
+            <div class="tabla-responsive"> <!-- [TABLA] -->
+              <table class="tabla-comparativa">
+                <thead>
+                  <tr>
+                    <th>Paso del Programa</th>
+                    <th>Producto Principal</th>
+                    <th>Beneficio Directo en tu Rutina</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Paso 1 — Limpieza e Hidratación</strong></td>
+                    <td>Concentrado de Herbal Aloe</td>
+                    <td>Refresca, hidrata el organismo y favorece la absorción de nutrientes limpiando el tracto digestivo.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Paso 2 — Energía y Metabolismo</strong></td>
+                    <td>Té Concentrado de Hierbas</td>
+                    <td>Aporta antioxidantes, brinda vitalidad natural y ayuda a activar la termogénesis y quema de calorías.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Paso 3 — Nutrición y Saciedad</strong></td>
+                    <td>Batido Nutricional Fórmula 1</td>
+                    <td>Alimento balanceado con proteína aislada de soya, vitaminas y minerales con bajas calorías.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Plus Opcional — Crocante &amp; Fibra</strong></td>
+                    <td>Protein Crunch / Fibra Activa</td>
+                    <td>Suma 7g extra de proteína crocante (+35 cal) o fibra de manzana/guayaba para mayor saciedad.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+        </div>
+
+        <div id="tab-lineas" class="panel-tab" style="display: none;"> <!-- [PESTAÑA 2: LÍNEAS Y ENFOQUE] Módulo 2: querySelectorAll + dataset -->
+
+          <section id="lineas-nutricion" class="seccion-card" aria-labelledby="heading-lineas"> <!-- [FILTRO POR DATASET] -->
+            <div class="seccion-header"> <!-- [CABECERA] -->
+              <h2 id="heading-lineas">Líneas de Consumo y Programas del Club</h2> <!-- [H2] -->
+              <span class="seccion-subtitulo">Filtra por categoría sin recargar la página</span> <!-- [SUBTÍTULO] -->
+            </div>
+
+            <div class="filtros-categoria" role="group" aria-label="Filtrar líneas del club por categoría"> <!-- [BOTONES DATA-CAT] -->
+              <button class="btn-primario btn-filtro-cat btn-hidratable" data-hidratado="false" data-cat="todos" type="button">Todas las Líneas</button>
+              <button class="btn-secundario btn-filtro-cat btn-hidratable" data-hidratado="false" data-cat="combos" type="button">Combos 3 Pasos</button>
+              <button class="btn-secundario btn-filtro-cat btn-hidratable" data-hidratado="false" data-cat="batidos" type="button">Batidos y Proteína</button>
+              <button class="btn-secundario btn-filtro-cat btn-hidratable" data-hidratado="false" data-cat="bebidas" type="button">Tés, Aloe y Fibra</button>
+            </div>
+
+            <div class="grid-3-cols"> <!-- [TARJETAS FILTRADAS POR DATASET.CATEGORIA] -->
+              <article class="tarjeta-linea" data-categoria="combos">
+                <h4><i class="fa-solid fa-star"></i> Combos 3 Pasos en Club o Para Llevar</h4>
+                <ul>
+                  <li><strong>Trío Clásico La Casita:</strong> Aloe + Té Concentrado + Batido Fórmula 1.</li>
+                  <li><strong>Formato Take Away:</strong> Vasos sellados con tapa domo y bombilla higiénica.</li>
+                  <li><strong>Pack Dúo Bienestar:</strong> Ideal para venir con pareja, familia o compañeros.</li>
+                </ul>
+              </article>
+
+              <article class="tarjeta-linea" data-categoria="batidos">
+                <h4><i class="fa-solid fa-blender"></i> Batidos Nutricionales Fórmula 1</h4>
+                <ul>
+                  <li><strong>Sabores Disponibles:</strong> Choco-Avellanas, Frutilla, Vainilla, Galletas y más.</li>
+                  <li><strong>Con Crocante de Proteína:</strong> 7 g de proteína extra y solo 35 calorías por porción.</li>
+                  <li><strong>Para Llevar a Casa:</strong> Tarros cerrados de 550 g con vaso mezclador Shaker.</li>
+                </ul>
+              </article>
+
+              <article class="tarjeta-linea" data-categoria="bebidas">
+                <h4><i class="fa-solid fa-leaf"></i> Bebidas Termogénicas, Aloe &amp; Fibra</h4>
+                <ul>
+                  <li><strong>Concentrado de Herbal Aloe:</strong> Suaviza y apoya el bienestar estomacal diario.</li>
+                  <li><strong>Té de Hierbas Frío o Caliente:</strong> Energía limpia para estudiar, trabajar o entrenar.</li>
+                  <li><strong>Fibra Activa (Manzana / Guayaba):</strong> Mezcla libre de gluten para tu digestión.</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section id="objetivos" class="seccion-card" aria-labelledby="heading-objetivos"> <!-- [PANEL DINÁMICO + ACORDEONES JQUERY] -->
+            <div class="seccion-header"> <!-- [CABECERA] -->
+              <h2 id="heading-objetivos">Elige tu Objetivo de Bienestar</h2> <!-- [H2] -->
+              <span class="seccion-subtitulo">Explora planes según tu meta y resuelve preguntas frecuentes</span> <!-- [SUBTÍTULO] -->
+            </div>
+
+            <div id="panelTematico" class="panel-tematico tema-desayuno"> <!-- [PANEL CAMBIO DINÁMICO] -->
+              <h3 id="tituloTema" style="margin-bottom: 6px; font-size: 18px;"><span id="iconoTema">🥤</span> Plan Control de Peso &amp; Desayuno Saludable</h3>
+              <p id="descTema" style="font-size: 14px; color: #f0fdf4;">
+                Sustituye un desayuno pesado por nuestro Combo de 3 Pasos bajo en calorías, rico en proteína y micronutrientes esenciales para mantener la saciedad toda la mañana.
+              </p>
+            </div>
+
+            <div class="botones-tema"> <!-- [BOTONES CAMBIO TEMÁTICA] -->
+              <button class="btn-accion btn-tema-meta btn-hidratable" data-hidratado="false" data-tema="desayuno" type="button">🥤 Control de Peso</button>
+              <button class="btn-primario btn-tema-meta btn-hidratable" data-hidratado="false" data-tema="energia" type="button">⚡ Energía y Deporte</button>
+              <button class="btn-secundario btn-tema-meta btn-hidratable" data-hidratado="false" data-tema="digestivo" type="button">🌿 Bienestar Digestivo</button>
+            </div>
+
+            <div class="accordion-item"> <!-- [ACORDEÓN 1] -->
+              <button class="accordion-btn btn-hidratable" data-hidratado="false" type="button">
+                <span>1. ¿Cómo funciona el consumo diario en el Club La Casita?</span><span>▼</span>
+              </button>
+              <div class="accordion-panel">
+                Vienes al club por la mañana o tarde, elegimos el sabor de batido, té y aloe que más te guste y te lo preparamos en el instante. También puedes pedirlo sellado para llevar mientras vas al trabajo.
+              </div>
+            </div>
+
+            <div class="accordion-item"> <!-- [ACORDEÓN 2] -->
+              <button class="accordion-btn btn-hidratable" data-hidratado="false" type="button">
+                <span>2. ¿Puedo personalizar mi batido con Crocante de Proteína o Fibra Activa?</span><span>▼</span>
+              </button>
+              <div class="accordion-panel">
+                Sí. En la pestaña <strong>Pedido</strong> puedes marcar adicionales como Crocante de Proteína (+5 BOB), Fibra Activa de Manzana/Guayaba (+6 BOB), Extra Proteína PPP (+8 BOB) o Colágeno (+10 BOB).
+              </div>
+            </div>
+
+            <div class="accordion-item"> <!-- [ACORDEÓN 3] -->
+              <button class="accordion-btn btn-hidratable" data-hidratado="false" type="button">
+                <span>3. ¿También venden tarros cerrados para preparar en casa?</span><span>▼</span>
+              </button>
+              <div class="accordion-panel">
+                Sí, Javier Espejo te asesora para adquirir tu Fórmula 1, Té Concentrado, Aloe o Fibra Activa en envase original sellado y enseñarte las medidas exactas para prepararlo en tu hogar.
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+        <div id="tab-catalogo" class="panel-tab" style="display: none;"> <!-- [PESTAÑA 3: CATÁLOGO] Módulo 2: Fetch + Buscador en Vivo + Comparar + Agregar -->
+
+          <section id="catalogo" class="seccion-card" aria-labelledby="heading-catalogo"> <!-- [CATÁLOGO DINÁMICO] -->
+            <div class="seccion-header"> <!-- [CABECERA] -->
+              <h2 id="heading-catalogo">Catálogo de Productos y Combos Herbalife</h2> <!-- [H2] -->
+              <span class="seccion-subtitulo">Busca por producto, sabor o beneficio y agrégalo directo a tu pedido</span> <!-- [SUBTÍTULO] -->
+            </div>
+
+            <div class="form-grupo"> <!-- [BUSCADOR EN TIEMPO REAL] -->
+              <label for="searchProducto">Buscar producto, sabor o beneficio (ej: batido, aloe, fibra, crocante, tarro):</label>
+              <input type="text" id="searchProducto" class="form-control" placeholder="Escribe para filtrar al instante...">
+            </div>
+
+            <div class="filtros-categoria" role="group" aria-label="Filtros rápidos de catálogo"> <!-- [CHIPS RÁPIDOS] -->
+              <button type="button" class="btn-tactil active-chip btn-modo-filtro btn-hidratable" data-hidratado="false" data-query="">Todos</button>
+              <button type="button" class="btn-tactil btn-modo-filtro btn-hidratable" data-hidratado="false" data-query="combo">Combos 3 Pasos</button>
+              <button type="button" class="btn-tactil btn-modo-filtro btn-hidratable" data-hidratado="false" data-query="batido">Batidos Fórmula 1</button>
+              <button type="button" class="btn-tactil btn-modo-filtro btn-hidratado="false" data-query="fibra">Fibra y Té</button>
+              <button type="button" class="btn-tactil btn-modo-filtro btn-hidratable" data-hidratado="false" data-query="tarro">Productos Cerrados</button>
+            </div>
+
+            <div id="catalogoProductos" class="catalogo-grid"> <!-- [CONTENEDOR FETCH + DOMPURIFY] -->
+              <p style="font-size: 14px; color: var(--text-muted);">Cargando catálogo nutricional de La Casita Club...</p>
+            </div>
+          </section>
+
+        </div>
+
+        <div id="tab-comunidad" class="panel-tab" style="display: none;"> <!-- [PESTAÑA 4: CLUB Y VIDEO] Video real + Fotos reales de socios -->
+
+          <section id="video-club" class="seccion-card" aria-labelledby="heading-video"> <!-- [VIDEO DEL CLUB] -->
+            <div class="seccion-header"> <!-- [CABECERA] -->
+              <h2 id="heading-video">Vive el Ambiente de La Casita Club</h2> <!-- [H2] -->
+              <span class="seccion-subtitulo">Video real de nuestra comunidad compartiendo nutrición cada día</span> <!-- [SUBTÍTULO] -->
+            </div>
+
+            <div class="grid-2-cols" style="align-items: center;"> <!-- [VIDEO + RESUMEN] -->
+              <div class="video-club-box"> <!-- [REPRODUCTOR MP4 REAL] -->
+                <video controls playsinline preload="metadata" poster="imagenes y video/WhatsApp Image 2026-11-23 at 7.20.14 PM.jpeg">
+                  <source src="imagenes y video/WhatsApp Video 2026-11-23 at 7.20.14 PM.mp4" type="video/mp4">
+                  Tu navegador no soporta video HTML5.
+                </video>
+              </div>
+              <div>
+                <h3 style="margin-bottom: 10px; font-size: 18px; color: var(--primary-club);">Más que un batido, un hábito en comunidad</h3>
+                <p style="font-size: 14.5px; color: var(--text-muted); margin-bottom: 12px;">
+                  En La Casita te recibimos con una sonrisa, preparamos tu Combo de 3 Pasos en el momento y te damos acompañamiento constante para que mantener hábitos saludables sea fácil y divertido.
+                </p>
+                <button type="button" class="btn-accion btn-go-tab btn-hidratable" data-hidratado="false" data-tab="tab-pedido">🛒 Quiero Probar Hoy en el Club</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="galeria-socios" class="seccion-card" aria-labelledby="heading-socios"> <!-- [GALERÍA REAL DE SOCIOS] -->
+            <div class="seccion-header"> <!-- [CABECERA] -->
+              <h2 id="heading-socios">Nuestra Comunidad y Socios en La Casita</h2> <!-- [H2] -->
+              <span class="seccion-subtitulo">Clientes reales disfrutando sus desayunos y bebidas nutricionales</span> <!-- [SUBTÍTULO] -->
+            </div>
+
+            <div class="grid-3-cols"> <!-- [6 FOTOS REALES DEL CLUB] -->
+              <article class="galeria-club-card">
+                <img src="imagenes y video/WhatsApp Image 2026-11-23 at 7.20.09 PM.jpeg" alt="Javier Espejo y socios compartiendo batidos en la mesa del club" width="480" height="360" loading="lazy">
+                <div class="galeria-club-card__body">
+                  <h4>Mañanas con Energía</h4>
+                  <p>Socios habituales disfrutando su batido Fórmula 1 con toppings crocantes junto a Javier.</p>
+                </div>
+              </article>
+
+              <article class="galeria-club-card">
+                <img src="imagenes y video/WhatsApp Image 2026-11-23 at 7.20.10 PM (1).jpeg" alt="Socia del Club La Casita con jarra de batido Herbalife Nutrition" width="480" height="360" loading="lazy">
+                <div class="galeria-club-card__body">
+                  <h4>Batido en Jarra Especial</h4>
+                  <p>Preparado cremoso con crocante de proteína para empezar el día satisfecho y con vitalidad.</p>
+                </div>
+              </article>
+
+              <article class="galeria-club-card">
+                <img src="imagenes y video/WhatsApp Image 2026-11-23 at 7.20.11 PM.jpeg" alt="Grupo de cuatro personas compartiendo en La Casita Club" width="480" height="360" loading="lazy">
+                <div class="galeria-club-card__body">
+                  <h4>Acompañamiento Cercano</h4>
+                  <p>Mesa de amigos y familia reunidos frente a la vitrina principal de sabores.</p>
+                </div>
+              </article>
+
+              <article class="galeria-club-card">
+                <img src="imagenes y video/WhatsApp Image 2026-11-23 at 7.20.12 PM (2).jpeg" alt="Javier Espejo compartiendo con un grupo de clientas en el club" width="480" height="360" loading="lazy">
+                <div class="galeria-club-card__body">
+                  <h4>Espacio Familiar</h4>
+                  <p>Ambiente cálido para toda la familia con atención personalizada y seguimiento diario.</p>
+                </div>
+              </article>
+
+              <article class="galeria-club-card">
+                <img src="imagenes y video/WhatsApp Image 2026-11-23 at 7.20.17 PM (1).jpeg" alt="Socia sonriendo con su batido nutricional Herbalife en el club" width="480" height="360" loading="lazy">
+                <div class="galeria-club-card__body">
+                  <h4>Constancia que Se Nota</h4>
+                  <p>Resultados reales construidos día a día combinando buena hidratación, té y batido.</p>
+                </div>
+              </article>
+
+              <article class="galeria-club-card">
+                <img src="imagenes y video/WhatsApp Image 2026-11-23 at 7.20.18 PM.jpeg" alt="Socia con jarra Herbalife y vaso shaker en La Casita" width="480" height="360" loading="lazy">
+                <div class="galeria-club-card__body">
+                  <h4>Combinación Favorita</h4>
+                  <p>Tu té caliente o frío en vaso mezclador junto a tu batido favorito del día.</p>
+                </div>
+              </article>
+            </div>
+          </section>
+
+        </div>
+
+        <div id="tab-pedido" class="panel-tab" style="display: none;"> <!-- [PESTAÑA 5: CARRITO Y PEDIDO WHATSAPP] Módulo 3 Contrato al 100% -->
+
+          <section id="pedido" class="seccion-card" aria-labelledby="heading-pedido"> <!-- [CARRITO + TOTAL EN TIEMPO REAL + WHATSAPP] -->
+            <div class="seccion-header"> <!-- [CABECERA] -->
+              <h2 id="heading-pedido">Arma tu Pedido — La Casita Club</h2> <!-- [H2] -->
+              <span class="seccion-subtitulo">Selecciona tus productos o combos, suma toppings y envíalo directo a WhatsApp</span> <!-- [SUBTÍTULO] -->
+            </div>
+
+            <div class="grid-2-cols"> <!-- [COLUMNA IZQUIERDA: SELECTOR + CARRITO / DERECHA: EXTRAS + RESUMEN WHATSAPP] -->
+              <div>
+                <div class="form-grupo"> <!-- [SELECTOR RÁPIDO PARA AGREGAR AL CARRITO] -->
+                  <label for="selectProductoRapido">Agregar producto o combo al pedido:</label>
+                  <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <select id="selectProductoRapido" class="form-control" style="flex: 1; min-width: 210px;">
+                      <option value="" data-nombre="" data-precio="0" selected>— Selecciona un producto o combo —</option>
+                      <option value="P1" data-nombre="Combo 3 Pasos La Casita (Aloe + Té + Batido)" data-precio="22">P1: Combo 3 Pasos La Casita — 22 BOB</option>
+                      <option value="P2" data-nombre="Batido Nutricional Fórmula 1 con Crocante" data-precio="15">P2: Batido Fórmula 1 con Crocante — 15 BOB</option>
+                      <option value="P3" data-nombre="Desayuno Nutricional Para Llevar (3 Pasos)" data-precio="24">P3: Desayuno Para Llevar (3 Pasos) — 24 BOB</option>
+                      <option value="P4" data-nombre="Pack Dúo Bienestar (2 Combos Completos)" data-precio="42">P4: Pack Dúo Bienestar (6 Vasos) — 42 BOB</option>
+                      <option value="P5" data-nombre="Dúo Batido Fórmula 1 + Té de Hierbas" data-precio="19">P5: Dúo Batido + Té Concentrado — 19 BOB</option>
+                      <option value="P6" data-nombre="Combo Fibra Activa Manzana + Batido" data-precio="20">P6: Combo Fibra Activa + Batido — 20 BOB</option>
+                      <option value="P7" data-nombre="Mega Té Energizante & Aloe (Jarra Club)" data-precio="14">P7: Mega Té & Aloe Refrescante — 14 BOB</option>
+                      <option value="P8" data-nombre="Tarro Fórmula 1 Choco-Avellanas + Shaker" data-precio="280">P8: Tarro Fórmula 1 (550g) + Shaker — 280 BOB</option>
+                    </select>
+                    <button id="btnAgregarRapido" type="button" class="btn-accion btn-hidratable" data-hidratado="false">+ Agregar</button>
+                  </div>
+                </div>
+
+                <div class="form-grupo"> <!-- [SABOR Y MODALIDAD] -->
+                  <label for="saborBatido">Sabor preferido para tu batido / té:</label>
+                  <select id="saborBatido" class="form-control">
+                    <option value="Choco-Avellanas">Choco-Avellanas</option>
+                    <option value="Frutilla Cremosa">Frutilla Cremosa</option>
+                    <option value="Vainilla Clásica">Vainilla Clásica</option>
+                    <option value="Galletas con Crema (Cookies)">Galletas con Crema (Cookies)</option>
+                    <option value="Té Frío Durazno / Limón + Aloe Mandarina">Té Frío + Aloe Mandarina / Original</option>
+                  </select>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <strong style="font-size: 14px;">Productos en tu Pedido:</strong>
+                  <button id="btnVaciarCarrito" type="button" class="btn-secundario btn-hidratable" data-hidratado="false" style="min-height: 36px; padding: 6px 12px; font-size: 12px;">Limpiar lista</button>
+                </div>
+
+                <div id="carritoLista" class="carrito-lista"> <!-- [CARRITO VACÍO AL INICIAR — SIN DATOS PRECARGADOS] -->
+                  <p class="carrito-vacio">Tu pedido está vacío. Agrega combos o batidos desde el Catálogo o el selector superior.</p>
+                </div>
+              </div>
+
+              <div> <!-- [ADICIONALES + TOTAL EN VIVO + BOTÓN WHATSAPP MÓDULO 3] -->
+                <div class="form-grupo">
+                  <label>Adicionales y Toppings Opcionales (se suman a tu total):</label>
+                  <label style="font-weight: 400;"><input type="checkbox" class="extra-topping" value="5" data-nombre="Crocante de Proteína Crunch"> Crocante de Proteína Protein Crunch (+5 BOB)</label>
+                  <label style="font-weight: 400;"><input type="checkbox" class="extra-topping" value="6" data-nombre="Medida Extra de Fibra Activa"> Medida Extra de Fibra Activa Manzana/Guayaba (+6 BOB)</label>
+                  <label style="font-weight: 400;"><input type="checkbox" class="extra-topping" value="8" data-nombre="Medida Extra de Proteína Personalizada"> Medida Extra de Proteína Personalizada (+8 BOB)</label>
+                  <label style="font-weight: 400;"><input type="checkbox" class="extra-topping" value="10" data-nombre="Porción de Colágeno Beauty Drink"> Porción de Colágeno Beauty Drink (+10 BOB)</label>
+                </div>
+
+                <div class="form-grupo">
+                  <label for="modalidadEntrega">¿Cómo deseas disfrutar tu pedido?</label>
+                  <select id="modalidadEntrega" class="form-control">
+                    <option value="Consumo en Mesa — La Casita Club">Consumo en Mesa — La Casita Club</option>
+                    <option value="Para Llevar (Recoger en Club — Vaso Sellado)">Para Llevar (Recoger en Club — Vaso Sellado)</option>
+                    <option value="Coordinar Delivery / Envío">Coordinar Delivery / Envío por WhatsApp</option>
+                  </select>
+                </div>
+
+                <div class="resumen-pedido-box"> <!-- [CAJA RESUMEN TOTAL + WHATSAPP DIRECTO] -->
+                  <p style="font-size: 13px; color: #dcfce7;">Total Estimado de tu Pedido:</p>
+                  <div style="margin: 8px 0;">
+                    Total: <span id="totalPedido" class="monto-destacado">0</span> <span style="font-weight: 700;">BOB</span>
+                  </div>
+                  <p style="font-size: 12px; color: #dcfce7; margin-bottom: 12px;">
+                    Pagas en el club o al coordinar entrega (Efectivo o QR). Al pulsar el botón se abrirá WhatsApp con tu pedido listo.
+                  </p>
+                  <button id="btnWhatsAppPedido" type="button" class="btn-whatsapp btn-hidratable" data-hidratado="false" style="width: 100%;">
+                    <i class="fa-brands fa-whatsapp"></i> Enviar Pedido por WhatsApp
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+        <div id="tab-contacto" class="panel-tab" style="display: none;"> <!-- [PESTAÑA 6: CONTACTO] Módulo 4: Validación Roja/Verde + preventDefault + Cola Offline -->
+
+          <section id="contacto" class="seccion-card" aria-labelledby="heading-contacto"> <!-- [FORMULARIO VALIDADO + INFO CLUB] -->
+            <div class="seccion-header"> <!-- [CABECERA] -->
+              <h2 id="heading-contacto">Agenda tu Evaluación Nutricional o Visítanos</h2> <!-- [H2] -->
+              <span class="seccion-subtitulo">Atención directa por Javier Espejo en La Casita — Club de Bienestar</span> <!-- [SUBTÍTULO] -->
+            </div>
+
+            <div class="grid-2-cols"> <!-- [2 COLUMNAS] -->
+              <form id="contactoForm" novalidate> <!-- [FORMULARIO VALIDACIÓN TIEMPO REAL MÓDULO 4] -->
+                <div class="form-grupo">
+                  <label for="nombre">Nombre y Apellido:</label>
+                  <input type="text" id="nombre" class="form-control" placeholder="Ej: Carlos Mamani" required>
+                  <span id="errNombre" class="error-msg">⚠️ Ingresa tu nombre y apellido reales (solo letras, mínimo 4 caracteres).</span>
+                </div>
+                <div class="form-grupo">
+                  <label for="telefono">Número de WhatsApp (Bolivia):</label>
+                  <input type="tel" id="telefono" class="form-control" placeholder="Ej: 71234567" required>
+                  <span id="errTelefono" class="error-msg">⚠️ Ingresa un celular válido de 8 dígitos (inicia con 6 o 7).</span>
+                </div>
+                <div class="form-grupo">
+                  <label for="correo">Correo Electrónico (Opcional / Confirmación):</label>
+                  <input type="email" id="correo" class="form-control" placeholder="tu@correo.com" required>
+                  <span id="errCorreo" class="error-msg">⚠️ Ingresa un correo electrónico válido.</span>
+                </div>
+                <div class="form-grupo">
+                  <label for="mensaje">Objetivo de Bienestar o Consulta:</label>
+                  <textarea id="mensaje" class="form-control" rows="3" placeholder="Ej: Quisiera probar el Combo 3 Pasos mañana y consultar por control de peso..." required></textarea>
+                  <span id="errMensaje" class="error-msg">⚠️ Describe brevemente tu consulta (mínimo 5 caracteres).</span>
+                </div>
+                <button type="submit" class="btn-accion btn-hidratable" data-hidratado="false">Enviar Consulta al Club</button>
+                <div id="successAlert" class="success-alert" role="status"></div> <!-- [ALERTA ÉXITO / OFFLINE] -->
+              </form>
+
+              <div> <!-- [INFORMACIÓN REAL DEL CLUB] -->
+                <h3 style="margin-bottom: 10px; font-size: 18px;">Datos de Atención — La Casita Club</h3>
+                <ul class="lista-contacto-club">
+                  <li><i class="fa-solid fa-user-check"></i> <strong>Anfitrión:</strong> Javier Espejo (Distribuidor Independiente Herbalife).</li>
+                  <li><i class="fa-solid fa-clock"></i> <strong>Horarios:</strong> Mañanas de desayuno saludable y tardes de merienda nutritiva.</li>
+                  <li><i class="fa-solid fa-qrcode"></i> <strong>Métodos de Pago:</strong> Efectivo y código QR (Yape / transferencia bancaria).</li>
+                  <li><i class="fa-solid fa-location-dot"></i> <strong>Ciudad:</strong> La Paz, Bolivia — Atención presencial y para llevar.</li>
+                  <li><i class="fa-brands fa-whatsapp"></i> <strong>WhatsApp Directo:</strong> <a id="linkWhatsAppClub" href="https://api.whatsapp.com/send?phone=59172557928" target="_blank" rel="noopener noreferrer">Escribir a La Casita Club (+591 72557928)</a></li>
+                </ul>
+                <div class="club-media-box" style="margin-top: 14px;">
+                  <img src="imagenes y video/WhatsApp Image 2026-11-23 at 7.20.18 PM (1).jpeg" alt="Javier Espejo y socia en el interior del Club La Casita con cartel del Plan de Bienestar" width="480" height="300" loading="lazy"> <!-- [FOTO REAL INTERIOR] -->
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <footer class="footer-club"> <!-- [FOOTER COMPLETO] Ocupa 100% del ancho debajo de barra lateral y contenido -->
+    <p><strong>La Casita — Club de Bienestar</strong> • Herbalife Nutrition • Anfitrión: Javier Espejo</p>
+    <p style="font-size: 12px; color: #bbf7d0; margin-top: 6px;">
+      Batidos Fórmula 1 • Té Concentrado • Herbal Aloe • Pagos en Efectivo y QR • La Paz, Bolivia
+    </p>
+  </footer>
+
+  <div id="toastAlert" class="toast-alert" role="status" aria-live="polite"> <!-- [TOAST DE NOTIFICACIÓN] -->
+    <strong>La Casita — Club de Bienestar</strong>
+    <p id="toastMsg" style="margin-top: 4px;">Producto agregado a tu pedido.</p>
+  </div>
+
+  <script src="script.js?v=2"></script> <!-- [SCRIPT PRINCIPAL] Lógica frontend v2 con cálculo directo en pedido y logo principal -->
+</body>
+
+</html> <!-- [FIN DOCUMENTO] -->

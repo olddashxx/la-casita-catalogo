@@ -1,0 +1,25 @@
+{
+  "name": "La Casita — Club de Bienestar Herbalife | Javier Espejo",
+  "short_name": "La Casita Club",
+  "description": "Catálogo oficial de batidos nutricionales, tés herbales, combos 3 pasos y suplementos Herbalife Nutrition en La Casita — Club de Bienestar.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f9f5",
+  "theme_color": "#14362a",
+  "orientation": "any",
+  "lang": "es-BO",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%2314362a'/%3E%3Cpath d='M96 34L32 88h20v68h88V88h20L96 34z' fill='none' stroke='%232e8b22' stroke-width='10' stroke-linejoin='round'/%3E%3Cpath d='M96 72c18 10 26 26 20 44-16 2-30-6-36-22 4-8 10-16 16-22z' fill='%2386efac'/%3E%3Ctext x='96' y='148' font-family='Arial,sans-serif' font-size='22' font-weight='bold' fill='%23ffffff' text-anchor='middle'%3ELA CASITA%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%2314362a'/%3E%3Cpath d='M256 88L84 234h54v182h236V234h54L256 88z' fill='none' stroke='%232e8b22' stroke-width='24' stroke-linejoin='round'/%3E%3Cpath d='M256 188c48 26 68 68 54 118-42 6-80-16-96-58 10-22 26-44 42-60z' fill='%2386efac'/%3E%3Ctext x='256' y='392' font-family='Arial,sans-serif' font-size='56' font-weight='bold' fill='%23ffffff' text-anchor='middle'%3ELA CASITA%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
